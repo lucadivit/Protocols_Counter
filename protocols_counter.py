@@ -5,14 +5,22 @@ import argparse as agp
 
 parser = agp.ArgumentParser(description="Compute the protocols involved in a list of pcaps")
 parser.add_argument('path', help='Path of the folder that contains pcaps')
+parser.add_argument('--output', help='Name of output file')
 try:
     path = parser.parse_args().path
+    file_name = parser.parse_args().output
 except:
     parser.print_help()
     sys.exit(0)
 
 if(path.endswith("/") is False):
     path = path + "/"
+
+if(file_name is None):
+    file_name = "prot_res.txt"
+else:
+    if(not file_name.endswith(".txt")):
+        file_name = file_name + ".txt"
 
 protocols = {}
 total_pkts = 0
@@ -45,7 +53,7 @@ for pcap in pcaps:
     i += 1
 
 protocols_sorted = sorted(protocols.items(), key=operator.itemgetter(1))
-file_w = open("prot_res.txt", "w")
+file_w = open(file_name, "w")
 file_w.write(str(protocols_sorted) + "\n")
 file_w.write("Pcap = " + str(len(pcaps)) + "\n")
 file_w.write("Pkts analyzed " + str(total_pkts) + "\n")
