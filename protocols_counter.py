@@ -1,4 +1,5 @@
 from scapy.all import *
+from scapy.layers import http
 import operator, glob
 import sys
 import argparse as agp
