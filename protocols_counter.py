@@ -1,5 +1,4 @@
 from scapy.all import *
-from scapy.layers import http
 import operator, glob
 import sys
 import argparse as agp
@@ -23,6 +22,8 @@ else:
     if(not file_name.endswith(".txt")):
         file_name = file_name + ".txt"
 
+load_layer("tls")
+load_layer("http")
 protocols = {}
 total_pkts = 0
 pcaps = glob.glob(path + "*.pcap")
